@@ -1,0 +1,107 @@
+<!--The content -->
+<div>
+  <section class="container">
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-6 offset-md-3 col-lg-6 offset-lg-3">
+        <div class="jumbotron custom-jumbotron">
+          <h3 class="section-heading mb-4">{{title}}</h3>
+
+
+          <div class="alert alert-info alert-dismissible fade show custom-alert">
+            <div class="row add-extra-container">
+              <div class="col-9 col-sm-9 col-md-8">
+                <div class="add-extra-wrapper">
+                  <a href="javascript:void(0)" class="add-extra" (click) = "addProduct()"><i class="fa fa-plus-circle"></i></a>
+                    <span>Add Matress Protector (Queen Size)</span>
+                </div>
+              </div>
+              <div class="col-3 col-sm-3 col-md-4">
+                <p class="text-right">$85</p>
+              </div>
+            </div>
+            
+          </div>
+
+          <div class="table-responsive mt-4">
+            <table class="table cart-table">
+                <tbody>
+
+                  <!-- the loop starts -->
+
+                  <tr *ngFor="let product of cart.products; let i = index">
+                    <td><img src="{{product.image}}" class="img-fluid"></td>
+                    <td>
+                      <div class="row">
+                        <div class="col-6 col-sm-7 col-md-7">
+                          <div class="product-description">
+                            <h6>{{product.name}}</h6>
+                            <p>Size: <span>{{product.size}}</span></p>
+                          </div>
+                        </div>
+                        <div class="col-6 col-sm-5 col-md-5">
+                          <a href="javascript:void(0)" title="Remove Item" (click) = deleteProducts(product) class="remove-product">&times;</a>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-6 col-sm-7 col-md-7">
+                          <div class="input-group custom-input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                  <a *ngIf="product.quantity>1" href="javascript:void(0)" (click)="product.quantity=product.quantity-1;setSubTotal();">-</a>
+                                </span>
+                            </div>
+                            <input type="number" class="form-control" min="1" [(ngModel)]="product.quantity" (input)="onInputChange($event,$event.target.value, product)">
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                  <a href="javascript:void(0)" (click)="product.quantity=product.quantity+1;setSubTotal();">+</a>
+                                </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-6 col-sm-5 col-md-5">
+                          <div class="right-side-info mt-2">${{product.price*product.quantity}}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td></td>
+                  </tr>
+
+                  <!-- the loop ends -->
+
+                  <tr>
+                    <td>Subtotal</td>
+                    <td class="right-side-info">${{cart.subtotal}}</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td>Shipping</td>
+                    <td class="right-side-info">
+                      <span *ngIf="cart.shipping == 0">Free</span>
+                      <span *ngIf="cart.shipping != 0">${{cart.shipping}}</span>
+                    </td>
+                    <td></td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td>Total</td>
+                    <td class="right-side-info">${{cart.total}}</td>
+                    <td></td>
+                  </tr>
+                </tfoot>
+              </table>
+          </div>
+
+          <!-- submit button -->
+          <button type="button" (click)="checkOut()" class="btn btn-checkout">Checkout</button>
+          <div class="mt-4">
+            <a href="javascript:void(0)" class="apply-gift-code">Apply Gift Code</a>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- <router-outlet></router-outlet> -->
